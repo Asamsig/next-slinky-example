@@ -14,7 +14,6 @@ object Index {
   @JSExportTopLevel(JSImport.Default, "Index")
   val component: ReactComponentClass[Props] =
     FunctionalComponent[Props] { props =>
-      println("Props: " + props.posts)
       Layout(home = true)(
         Next.Head(
           title(siteTitle)
@@ -26,12 +25,6 @@ object Index {
             "This is a sample website - you’ll be building a site like this on ",
             a(href := "https://nextjs.org/learn")("our Next.js tutorial"),
             "."
-          ),
-          div(
-            "Read ",
-            Next.Link(href = "/posts/first-post")(
-              a("this page!")
-            )
           )
         ),
         section(className := s"${UtilStyles.headingMd} ${UtilStyles.padding1px}")(
@@ -39,11 +32,13 @@ object Index {
           ul(className := UtilStyles.list)(
             props.posts.map { case Post(id, date, title) =>
               li(className := UtilStyles.listItem, key := id)(
-                title,
+                Next.Link(href = s"/posts/$id")(
+                  a(title)
+                ),
                 br(),
-                id,
-                br(),
-                date
+                small(className := UtilStyles.lightText)(
+                  Date(dateString = date)
+                )
               )
             }
           )
@@ -54,7 +49,6 @@ object Index {
   @JSExportTopLevel("getStaticProps", "Index")
   val getStaticProps: js.Function0[Promise[js.Object]] = () =>
     Promise.resolve[js.Object] {
-      println("Static Props called")
       val allPostsData = Posts.getSortedPostsData()
       js.Dynamic.literal(
         props = js.Dynamic.literal(posts = allPostsData)

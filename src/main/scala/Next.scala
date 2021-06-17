@@ -1,13 +1,11 @@
-import slinky.core.{ExternalComponent, ExternalComponentNoProps, ExternalComponentWithAttributes}
 import slinky.core.annotations.react
-import slinky.web.svg.image
+import slinky.core.{ExternalComponent, ExternalComponentNoProps}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
-/**
- * Need a proper facade for Next.js components
- */
+/** Need a proper facade for Next.js components
+  */
 object Next {
 
   @react object Link extends ExternalComponent {
@@ -22,7 +20,14 @@ object Next {
   }
 
   @react object Image extends ExternalComponent /*WithAttributes[image.tag.type]*/ {
-    case class Props(className: String, src: String, height: Int, width: Int, alt: String, priority: Boolean = false)
+    case class Props(
+        className: String,
+        src: String,
+        height: Int,
+        width: Int,
+        alt: String,
+        priority: Boolean = false
+    )
     override val component = NextImage
   }
 
@@ -32,7 +37,7 @@ object Next {
     def apply(): js.Object = js.native
   }
 
-  object Head extends ExternalComponentNoProps  {
+  object Head extends ExternalComponentNoProps {
     override val component = NextHead
   }
 

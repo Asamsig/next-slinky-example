@@ -27,6 +27,8 @@ object UtilStyles extends js.Object {
   val padding1px: String = js.native
   val list: String = js.native
   val listItem: String = js.native
+  val headingXl: String = js.native
+  val lightText: String = js.native
 }
 
 @react object Layout {
