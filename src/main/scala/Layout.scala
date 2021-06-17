@@ -24,6 +24,9 @@ object UtilStyles extends js.Object {
   val headingLg: String = js.native
   val colorInherit: String = js.native
   val headingMd: String = js.native
+  val padding1px: String = js.native
+  val list: String = js.native
+  val listItem: String = js.native
 }
 
 @react object Layout {
