@@ -1,4 +1,2 @@
 import 'resources/global.css'
-export default function App({ Component, pageProps }) {
-    return <Component {...pageProps} />
-}
+export { default } from "scalajs/App"

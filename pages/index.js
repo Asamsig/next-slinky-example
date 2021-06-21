@@ -1,2 +1,2 @@
-export { getStaticProps } from 'scalajs/Index'
-export { default } from "scalajs/Index"
+export {default} from "scalajs/Index"
+export {getSortedPostsData as getStaticProps} from 'scalajs/Posts'

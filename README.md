@@ -20,13 +20,13 @@ this way we can consistently reach our Scala.js components, regardless of how ne
 
 Consider this example:
 
--   The [pages/posts/first-post.js](pages/posts/first-post.js)-file resides in a subdirectory `posts`, this is for Next.js' routing purposes. So for us to actually reach our Scala.js components, we'd have to import it like so:
+-   The [pages/posts/index.js](pages/posts/index.js)-file resides in a subdirectory `posts`, this is for Next.js' routing purposes. So for us to actually reach our Scala.js components, we'd have to import it like so:
 
-    > export { default } from "../../target/scalajs/FirstPost"
+    > export { default } from "../../target/scalajs/Index"
 
     When we instead leverage the path alias, we know that we can consistently import our components like this, no matter the nesting:
 
-    > export { default } from "scalajs/FirstPost"
+    > export { default } from "scalajs/Index"
 
     Regardless of nesting, WIN!
     

@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.JSImport
 
 /** Need a proper facade for Next.js components
   */
-object Next {
+package object next {
 
   @react object Link extends ExternalComponent {
     case class Props(href: String)
@@ -15,7 +15,7 @@ object Next {
 
   @js.native
   @JSImport("next/link", JSImport.Default)
-  object NextLink extends js.Object {
+  private object NextLink extends js.Object {
     def apply(): js.Object = js.native
   }
 
@@ -33,7 +33,7 @@ object Next {
 
   @js.native
   @JSImport("next/image", JSImport.Default)
-  object NextImage extends js.Object {
+  private object NextImage extends js.Object {
     def apply(): js.Object = js.native
   }
 
@@ -43,7 +43,7 @@ object Next {
 
   @js.native
   @JSImport("next/head", JSImport.Default)
-  object NextHead extends js.Object {
+  private object NextHead extends js.Object {
     def apply(): js.Object = js.native
   }
 

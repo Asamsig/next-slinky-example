@@ -1,21 +1,22 @@
-import Layout.siteTitle
-import slinky.core.ReactComponentClass._
+package pages
+
+import components.Layout.siteTitle
+import components.{Date, Layout, UtilStyles}
+import next.{Head, Link}
 import slinky.core.{FunctionalComponent, ReactComponentClass}
 import slinky.web.html._
 
-import scala.scalajs.js
-import scala.scalajs.js.Promise
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 
-object Index {
+protected object Index {
 
   case class Post(id: String, date: String, title: String)
-  case class Props(posts: Seq[Post])
+  case class Props(allPostsData: Seq[Post])
   @JSExportTopLevel(JSImport.Default, "Index")
-  val component: ReactComponentClass[Props] =
+  protected val component: ReactComponentClass[Props] =
     FunctionalComponent[Props] { props =>
       Layout(home = true)(
-        Next.Head(
+        Head(
           title(siteTitle)
         ),
         section(className := UtilStyles.headingMd)(
@@ -30,9 +31,9 @@ object Index {
         section(className := s"${UtilStyles.headingMd} ${UtilStyles.padding1px}")(
           h2(className := UtilStyles.headingLg)("Blog"),
           ul(className := UtilStyles.list)(
-            props.posts.map { case Post(id, date, title) =>
+            props.allPostsData.map { case Post(id, date, title) =>
               li(className := UtilStyles.listItem, key := id)(
-                Next.Link(href = s"/posts/$id")(
+                Link(href = s"/posts/$id")(
                   a(title)
                 ),
                 br(),
@@ -43,15 +44,6 @@ object Index {
             }
           )
         )
-      )
-    }
-
-  @JSExportTopLevel("getStaticProps", "Index")
-  val getStaticProps: js.Function0[Promise[js.Object]] = () =>
-    Promise.resolve[js.Object] {
-      val allPostsData = Posts.getSortedPostsData()
-      js.Dynamic.literal(
-        props = js.Dynamic.literal(posts = allPostsData)
       )
     }
 

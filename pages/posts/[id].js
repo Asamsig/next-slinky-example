@@ -1,1 +1,2 @@
-export { default, getStaticPaths, getStaticProps } from "scalajs/Post"
+export { default } from "scalajs/Post"
+export { getAllPostIds as getStaticPaths, getPostData as getStaticProps } from 'scalajs/Posts'

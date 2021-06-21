@@ -1,3 +1,5 @@
+package components
+
 import slinky.core.annotations.react
 import slinky.core.{CustomAttribute, FunctionalComponent}
 import slinky.web.html.time

@@ -1,3 +1,6 @@
+package components
+
+import next._
 import slinky.core.BuildingComponent._
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
@@ -40,7 +43,7 @@ object UtilStyles extends js.Object {
   case class Props(home: Boolean, children: ReactElement*)
   val component = FunctionalComponent[Props] { props =>
     div(className := Styles.container)(
-      Next.Head(
+      Head(
         link(rel := "icon", href := "/favicon"),
         meta(
           property := "description",
@@ -57,7 +60,7 @@ object UtilStyles extends js.Object {
         if (props.home) {
           Seq(
             make(
-              Next.Image(
+              Image(
                 priority = true,
                 src = "/images/profile.png",
                 className = UtilStyles.borderCircle,
@@ -71,9 +74,9 @@ object UtilStyles extends js.Object {
         } else {
           Seq(
             make(
-              Next.Link(href = "/")(
+              Link(href = "/")(
                 a(
-                  Next.Image(
+                  Image(
                     priority = true,
                     src = "/images/profile.png",
                     className = UtilStyles.borderCircle,
@@ -85,7 +88,7 @@ object UtilStyles extends js.Object {
               )
             ),
             h2(className := UtilStyles.headingLg)(
-              Next.Link(href = "/")(
+              Link(href = "/")(
                 a(className := UtilStyles.colorInherit)(name)
               )
             )
@@ -95,7 +98,7 @@ object UtilStyles extends js.Object {
       main(props.children),
       Option.unless(props.home) {
         div(className := Styles.backToHome)(
-          Next.Link(href = "/")(
+          Link(href = "/")(
             a("← Back to home")
           )
         )

@@ -1,3 +1,5 @@
+package lib
+
 import typings.grayMatter.{mod => matter}
 import typings.node.{BufferEncoding, fsMod => fs, pathMod => path, processMod => process}
 import typings.remark.{mod => remark}
@@ -6,11 +8,14 @@ import typings.remarkHtml.{mod => html}
 import scala.scalajs.js
 import scala.scalajs.js.Dictionary
 import scala.scalajs.js.JSConverters.JSRichMap
-object Posts {
+import scala.scalajs.js.annotation.JSExportTopLevel
 
-  val postsDirectory = path.join(process.cwd(), "posts")
+protected object Posts {
 
-  val getSortedPostsData: () => js.Array[Dictionary[js.Any]] = () => {
+  private val postsDirectory = path.join(process.cwd(), "posts")
+
+  @JSExportTopLevel("getSortedPostsData", "Posts")
+  protected def getSortedPostsData(): js.Object with js.Dynamic = {
     // Get file names under /posts
     val fileNames = fs.readdirSync(postsDirectory)
     val allPostsData: js.Array[Dictionary[js.Any]] = fileNames.map { fileName =>
@@ -27,11 +32,14 @@ object Posts {
       // Combine the data with the id
       matterResult.data.addOne("id" -> id).toJSDictionary
     }
-    // Sort posts by date
-    allPostsData.sortBy(_.apply("date").toString)
+    js.Dynamic.literal(
+      // Sort posts by date
+      props = js.Dynamic.literal(allPostsData = allPostsData.sortBy(_.apply("date").toString))
+    )
   }
 
-  val getAllPostIds: () => js.Array[js.Object] = () => {
+  @JSExportTopLevel("getAllPostIds", "Posts")
+  protected def getAllPostIds(): js.Object = {
     val fileNames = fs.readdirSync(postsDirectory)
 
     // Returns an array that looks like this:
@@ -47,16 +55,22 @@ object Posts {
     //     }
     //   }
     // ]
-    fileNames.map { fileName =>
+    val paths = fileNames.map { fileName =>
       js.Dynamic.literal(
         params = js.Dynamic.literal(
           id = fileName.replaceAll("\\.md$", "")
         )
       )
     }
+    js.Dynamic.literal(
+      paths = paths,
+      fallback = false
+    )
   }
 
-  val getPostData: String => Dictionary[js.Any] = (id: String) => {
+  @JSExportTopLevel("getPostData", "Posts")
+  protected def getPostData(params: js.Dynamic): js.Object = {
+    val id = params.params.id.toString
     val fullPath = path.join(postsDirectory, s"$id.md")
     val fileContents = fs.readFileSync(fullPath, BufferEncoding.utf8)
 
@@ -72,7 +86,16 @@ object Posts {
     val contentHtml = processedContent.toString
 
     // Combine the data with the id and contentHtml
-    matterResult.data.addOne("id" -> id).addOne("contentHtml" -> contentHtml).toJSDictionary
+    val postData = matterResult.data
+      .addOne("id" -> id)
+      .addOne("contentHtml" -> contentHtml)
+      .toJSDictionary
+
+    js.Dynamic.literal(
+      props = js.Dynamic.literal(
+        postData = postData
+      )
+    )
   }
 
 }
